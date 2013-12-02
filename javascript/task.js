@@ -7,6 +7,8 @@ Dingbat.Task = DS.Model.extend({
 
     priority: DS.attr('string'),
 
+    tags: DS.attr('string'),
+
     init: function() {
         this._super();
 
@@ -48,7 +50,31 @@ Dingbat.Task = DS.Model.extend({
             this.set('isCompleted', true);
             this.set('title', title);
         }
-    }.on('didUpdate')
+    }.on('didUpdate'),
+
+    parseTags: function() {
+        var title   = this.get('title');
+        var pattern = /#\S+/g;
+        var tags    = '';
+
+        if (title.search(pattern) != -1) {
+
+            title.match(pattern).forEach(function(hit) {
+                // remove tag from title
+                title = title.replace(hit, '');
+
+                var tag = hit.replace('#', '');
+                tags   += tag + ', ';
+            });
+
+            // trim tags
+            tags = tags.substr(0, (tags.length - 2));
+
+            // set tags and title
+            this.set('tags', tags);
+            this.set('title', title);
+        }
+    }.on('didCreate', 'didUpdate')
 
 });
 
@@ -57,18 +83,21 @@ Dingbat.Task.FIXTURES = [
         id: 1,
         title: 'kiss a chicken',
         priority: 'high',
-        isCompleted: true
+        isCompleted: true,
+        tags: 'bug, setup, ui'
     },
     {
         id: 2,
         title: 'save whale',
         priority: 'high',
-        isCompleted: false
+        isCompleted: false,
+        tags: 'feature, ui'
     },
     {
         id: 3,
         title: 'do something',
         priority: 'normal',
-        isCompleted: false
+        isCompleted: false,
+        tags: 'bug, setup'
     }
 ];

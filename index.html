@@ -27,125 +27,109 @@
     <!-- list -->
     <div class="ui segment">
 
-        <div class="ui red ribbon label">High</div>
-        <div class="ui divided relaxed list">
-            {{#each high}}
-                <div class="item" >
-                    <div class="right floated">
-                        <i class="edit sign link icon" {{action "editTask"}}></i>
-                        <i class="remove sign link icon" {{action "removeTodo"}}></i>
-                    </div>
-                    <i class="empty checkbox link icon" {{action "markAsCompleted"}}></i>
-                    <div class="content">
-                        {{#if isEditing}}
-                        <div class="ui fluid icon input">
-                            {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
-                            <div class="ui icon button"><i class="add sign icon"></i></div>
+        {{#if high}}
+            <div class="ui red ribbon label">High</div>
+            <div class="ui divided relaxed list">
+                {{#each high}}
+                    <div class="item" >
+                        <div class="right floated">
+                            <i class="edit sign link icon" {{action "editTask"}}></i>
+                            <i class="remove sign link icon" {{action "removeTodo"}}></i>
                         </div>
-                        {{else}}
-                        <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                        <div class="description">
-                            bug, setup, ui
+                        <i class="empty checkbox link icon" {{action "markAsCompleted"}}></i>
+                        <div class="content">
+                            {{#if isEditing}}
+                                <div class="ui fluid icon input">
+                                    {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
+                                    <div class="ui icon button"><i class="add sign icon"></i></div>
+                                </div>
+                            {{else}}
+                                <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
+                                <div class="description">{{tags}}</div>
+                            {{/if}}
                         </div>
-                        {{/if}}
                     </div>
-                </div>
-            {{else}}
-                <div class="item" >
-                    No Tasks
-                </div>
-            {{/each}}
-        </div>
+                {{/each}}
+            </div>
+        {{/if}}
 
-        <div class="ui teal ribbon label">Normal</div>
-        <div class="ui divided relaxed list">
-            {{#each normal}}
-            <div class="item" >
-                <div class="right floated">
-                    <i class="edit sign link icon" {{action "editTask"}}></i>
-                    <i class="remove sign link icon" {{action "removeTodo"}}></i>
-                </div>
-                <i class="empty checkbox link icon" {{action "markAsCompleted"}}></i>
-                <div class="content">
-                    {{#if isEditing}}
-                    <div class="ui fluid icon input">
-                        {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
-                        <div class="ui icon button"><i class="add sign icon"></i></div>
+        {{#if normal}}
+            <div class="ui teal ribbon label">Normal</div>
+            <div class="ui divided relaxed list">
+                {{#each normal}}
+                    <div class="item" >
+                        <div class="right floated">
+                            <i class="edit sign link icon" {{action "editTask"}}></i>
+                            <i class="remove sign link icon" {{action "removeTodo"}}></i>
+                        </div>
+                        <i class="empty checkbox link icon" {{action "markAsCompleted"}}></i>
+                        <div class="content">
+                            {{#if isEditing}}
+                                <div class="ui fluid icon input">
+                                    {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
+                                    <div class="ui icon button"><i class="add sign icon"></i></div>
+                                </div>
+                            {{else}}
+                                <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
+                                <div class="description">{{tags}}</div>
+                            {{/if}}
+                        </div>
                     </div>
-                    {{else}}
-                    <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                    <div class="description">
-                        bug, setup, ui
-                    </div>
-                    {{/if}}
-                </div>
+                {{/each}}
             </div>
-            {{else}}
-            <div class="item" >
-                No Tasks
-            </div>
-            {{/each}}
-        </div>
+        {{/if}}
 
-        <div class="ui green ribbon label">Low</div>
-        <div class="ui divided relaxed list">
-            {{#each low}}
-            <div class="item" >
-                <div class="right floated">
-                    <i class="edit sign link icon" {{action "editTask"}}></i>
-                    <i class="remove sign link icon" {{action "removeTodo"}}></i>
-                </div>
-                <i class="empty checkbox link icon" {{action "markAsCompleted"}}></i>
-                <div class="content">
-                    {{#if isEditing}}
-                    <div class="ui fluid icon input">
-                        {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
-                        <div class="ui icon button"><i class="add sign icon"></i></div>
+        {{#if low}}
+            <div class="ui green ribbon label">Low</div>
+            <div class="ui divided relaxed list">
+                {{#each low}}
+                    <div class="item" >
+                        <div class="right floated">
+                            <i class="edit sign link icon" {{action "editTask"}}></i>
+                            <i class="remove sign link icon" {{action "removeTodo"}}></i>
+                        </div>
+                        <i class="empty checkbox link icon" {{action "markAsCompleted"}}></i>
+                        <div class="content">
+                            {{#if isEditing}}
+                                <div class="ui fluid icon input">
+                                    {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
+                                    <div class="ui icon button"><i class="add sign icon"></i></div>
+                                </div>
+                            {{else}}
+                                <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
+                                <div class="description">{{tags}}</div>
+                            {{/if}}
+                        </div>
                     </div>
-                    {{else}}
-                    <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                    <div class="description">
-                        bug, setup, ui
-                    </div>
-                    {{/if}}
-                </div>
+                {{/each}}
             </div>
-            {{else}}
-            <div class="item" >
-                No Tasks
-            </div>
-            {{/each}}
-        </div>
+        {{/if}}
 
-        <div class="ui ribbon label">Archive</div>
-        <div class="ui divided relaxed list">
-            {{#each completed}}
-            <div class="item" >
-                <div class="right floated">
-                    <i class="edit sign link icon" {{action "editTask"}}></i>
-                    <i class="remove sign link icon" {{action "removeTodo"}}></i>
-                </div>
-                <i class="checked checkbox link icon"></i>
-                <div class="content">
-                    {{#if isEditing}}
-                    <div class="ui fluid icon input">
-                        {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
-                        <div class="ui icon button"><i class="add sign icon"></i></div>
+        {{#if completed}}
+            <div class="ui ribbon label">Archive</div>
+            <div class="ui divided relaxed list">
+                {{#each completed}}
+                    <div class="item" >
+                        <div class="right floated">
+                            <i class="edit sign link icon" {{action "editTask"}}></i>
+                            <i class="remove sign link icon" {{action "removeTodo"}}></i>
+                        </div>
+                        <i class="checked checkbox link icon"></i>
+                        <div class="content">
+                            {{#if isEditing}}
+                                <div class="ui fluid icon input">
+                                    {{edit-task class="edit" value=title focus-out="acceptChanges" insert-newline="acceptChanges"}}
+                                    <div class="ui icon button"><i class="add sign icon"></i></div>
+                                </div>
+                            {{else}}
+                                <span class="completed" {{action "editTask" on="doubleClick"}}>{{title}}</span>
+                                <div class="description">{{tags}}</div>
+                            {{/if}}
+                        </div>
                     </div>
-                    {{else}}
-                    <span class="completed" {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                    <div class="description">
-                        bug, setup, ui
-                    </div>
-                    {{/if}}
-                </div>
+                {{/each}}
             </div>
-            {{else}}
-            <div class="item" >
-                No Tasks
-            </div>
-            {{/each}}
-        </div>
+        {{/if}}
 
     </div>
 </script>
