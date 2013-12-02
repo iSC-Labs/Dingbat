@@ -18,6 +18,12 @@
 
 <script type="text/x-handlebars" data-template-name="tasks/index">
 
+    <!-- add form -->
+    <div class="ui fluid large icon input">
+        {{input type="text" placeholder="New Task" value=title action="createTask"}}
+        <div class="ui large icon button"><i class="add sign icon"></i></div>
+    </div>
+
     <!-- list -->
     <div class="ui segment">
 
@@ -244,11 +250,7 @@
                 <div class="ui right floated button toggle-sidebar"><i class="list icon"></i> Menu</div>
             </h1>
 
-            <!-- add form -->
-            <div class="ui fluid large icon input">
-                {{input type="text" placeholder="New Task" value=title action="createTask"}}
-                <div class="ui large icon button"><i class="add sign icon"></i></div>
-            </div>
+
 
             {{outlet}}
 
