@@ -1,0 +1,36 @@
+html,
+body {
+    font-size: 15px;
+    height: 100%;
+}
+
+body {
+    font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    background: #FFFFFF;
+    margin: 0px;
+    padding: 0px;
+    color: #555555;
+    text-rendering: optimizeLegibility;
+    min-width: 320px;
+}
+
+.ui.page {
+    padding-top: 20px !important;
+}
+
+body .grid {
+    height: 100%;
+}
+
+#left, #right {
+    padding: 1em 2em;
+}
+
+#right {
+    background-color: #FAFAFA;
+}
+
+#cards .item {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
