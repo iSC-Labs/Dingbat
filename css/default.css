@@ -30,7 +30,11 @@ body .grid {
     background-color: #FAFAFA;
 }
 
-#cards .item {
+#lists .item {
     padding-top: 1rem;
     padding-bottom: 1rem;
+}
+
+#lists a:hover {
+    background-color: #FAFAFA;
 }
