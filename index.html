@@ -18,6 +18,23 @@
 
             $('[data-content]').popup();
 
+            $('#add-form').form({
+                task: {
+                    identifier: 'task',
+                    rules: [{
+                        type: 'empty'
+                    }]
+                }
+            }, {
+                onFailure: function() {
+                    $(this).transition({
+                        animation: 'flash',
+                        duration:  '400ms'
+                    });
+                    return false;
+                }
+            });
+
         });
     </script>
 
@@ -89,10 +106,10 @@
         </h1>
 
         <!-- add form -->
-        <div class="ui fluid large icon input">
-            <input type="text" placeholder="New Task">
+        <form id="add-form" class="ui fluid large icon input">
+            <input type="text" placeholder="New Task" name="task">
             <div class="ui large icon button"><i class="add sign icon"></i></div>
-        </div>
+        </form>
 
         <!-- list -->
         <div class="ui segment">
