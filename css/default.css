@@ -38,3 +38,7 @@ body .grid {
 #lists a:hover {
     background-color: #FAFAFA;
 }
+
+.completed {
+    text-decoration: line-through;
+}
