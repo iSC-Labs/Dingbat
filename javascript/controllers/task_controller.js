@@ -5,6 +5,21 @@ Dingbat.TaskController = Ember.ObjectController.extend({
     actions: {
 
         editTask: function() {
+            // add tags and priorities to title
+            var title       = this.get('title');
+
+            // prepare tags
+            var hashedTags = '';
+            this.get('tags').split(',').forEach(function(tag) {
+                hashedTags += '#' + tag.trim() + ' ';
+            });
+            var tags = hashedTags.trim();
+
+            if (tags.length != 0) {
+                tags = ' ' + tags;
+            }
+
+            this.set('title', title + tags);
             this.set('isEditing', true);
         },
 

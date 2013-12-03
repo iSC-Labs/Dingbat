@@ -45,7 +45,13 @@
                                 </div>
                             {{else}}
                                 <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                                <div class="description">{{tags}}</div>
+                                <div class="description">
+                                    {{#if tags}}
+                                        {{tags}}
+                                    {{else}}
+                                        &nbsp;
+                                    {{/if}}
+                                </div>
                             {{/if}}
                         </div>
                     </div>
@@ -71,7 +77,13 @@
                                 </div>
                             {{else}}
                                 <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                                <div class="description">{{tags}}</div>
+                                <div class="description">
+                                    {{#if tags}}
+                                        {{tags}}
+                                    {{else}}
+                                        &nbsp;
+                                    {{/if}}
+                                </div>
                             {{/if}}
                         </div>
                     </div>
@@ -97,7 +109,13 @@
                                 </div>
                             {{else}}
                                 <span {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                                <div class="description">{{tags}}</div>
+                                <div class="description">
+                                    {{#if tags}}
+                                        {{tags}}
+                                    {{else}}
+                                        &nbsp;
+                                    {{/if}}
+                                </div>
                             {{/if}}
                         </div>
                     </div>
@@ -123,7 +141,13 @@
                                 </div>
                             {{else}}
                                 <span class="completed" {{action "editTask" on="doubleClick"}}>{{title}}</span>
-                                <div class="description">{{tags}}</div>
+                                <div class="description">
+                                    {{#if tags}}
+                                        {{tags}}
+                                    {{else}}
+                                        &nbsp;
+                                    {{/if}}
+                                </div>
                             {{/if}}
                         </div>
                     </div>
@@ -223,24 +247,17 @@
 
     </div>
 
+    <!-- content -->
+    <div id="right" class="eleven wide column">
 
+        <!-- header -->
+        <h1 class="ui header">
+            Project B
+            <div class="ui right floated button toggle-sidebar"><i class="list icon"></i> Menu</div>
+        </h1>
 
-        <!-- content -->
-        <div id="right" class="eleven wide column">
-
-            <!-- header -->
-            <h1 class="ui header">
-                Project B
-                <div class="ui right floated button toggle-sidebar"><i class="list icon"></i> Menu</div>
-            </h1>
-
-
-
-            {{outlet}}
-
-        </div>
-
-
+        {{outlet}}
+    </div>
 </div>
 
 </script>
@@ -260,31 +277,27 @@
 <script src="javascript/views/edit_task_view.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    $(function() {
+    $('.toggle-sidebar').click(function() {
+        $('.ui.sidebar').sidebar('toggle');
+    });
 
-        $('.toggle-sidebar').click(function() {
-            $('.ui.sidebar').sidebar('toggle');
-        });
+    $('[data-content]').popup();
 
-        $('[data-content]').popup();
-
-        $('#add-form').form({
-            task: {
-                identifier: 'task',
-                rules: [{
-                    type: 'empty'
-                }]
-            }
-        }, {
-            onFailure: function() {
-                $(this).transition({
-                    animation: 'flash',
-                    duration:  '400ms'
-                });
-                return false;
-            }
-        });
-
+    $('#add-form').form({
+        task: {
+            identifier: 'task',
+            rules: [{
+                type: 'empty'
+            }]
+        }
+    }, {
+        onFailure: function() {
+            $(this).transition({
+                animation: 'flash',
+                duration:  '400ms'
+            });
+            return false;
+        }
     });
 </script>
 

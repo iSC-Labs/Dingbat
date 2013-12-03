@@ -9,45 +9,52 @@ Dingbat.Task = DS.Model.extend({
 
     tags: DS.attr('string'),
 
-    init: function() {
-        this._super();
-
-        //this.on('didCreate', this, function() { this.parsePriority(); });
-        //this.on('didUpdate', this, function() { this.parsePriority(); });
-    },
-
     parsePriority: function() {
         var title    = this.get('title');
         var priority = this.get('priority');
+        var high     = /@high/;
+        var normal   = /@normal/;
+        var low      = /@low/;
 
+        // default priority
         if (priority === null) {
             priority = 'normal';
         }
 
-        if (title.search(/@high/) != -1) {
-            priority = 'high';
-            title = title.replace(/@high/, '');
-        }
-        else if (title.search(/@normal/) != -1) {
-            priority = 'normal';
-            title = title.replace(/@normal/, '');
-        }
-        else if (title.search(/@low/) != -1) {
+        // parse priority
+        if (title.search(low) != -1) {
             priority = 'low';
-            title = title.replace(/@low/, '');
+            title = title.replace(low, '');
+        }
+        if (title.search(normal) != -1) {
+            priority = 'normal';
+            title = title.replace(normal, '');
+        }
+        if (title.search(high) != -1) {
+            priority = 'high';
+            title = title.replace(high, '');
         }
 
         this.set('title', title.trim());
         this.set('priority', priority);
     }.on('didCreate', 'didUpdate'),
 
-    parseIsCompleted: function() {
-        var title = this.get('title');
+    parseIsCompleted: function(a, b, c) {
+        var title  = this.get('title');
+        var done   = /@done/;
+        var undone = /@undone/;
 
-        if (title.search(/@done/) != -1) {
-            title = title.replace(/@done/, '');
+        // parse status
+        if (title.search(done) != -1) {
+            title = title.replace(done, '');
 
             this.set('isCompleted', true);
+            this.set('title', title);
+        }
+        if (title.search(undone) != -1) {
+            title = title.replace(undone, '');
+
+            this.set('isCompleted', false);
             this.set('title', title);
         }
     }.on('didUpdate'),
