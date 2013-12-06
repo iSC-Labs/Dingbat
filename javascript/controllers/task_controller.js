@@ -2,6 +2,8 @@ Dingbat.TaskController = Ember.ObjectController.extend({
 
     isEditing: false,
 
+    bla: 'sadasd',
+
     actions: {
 
         editTask: function() {
@@ -9,8 +11,14 @@ Dingbat.TaskController = Ember.ObjectController.extend({
             var title       = this.get('title');
 
             // prepare tags
+            var tags       = this.get('tags');
             var hashedTags = '';
-            this.get('tags').split(',').forEach(function(tag) {
+
+            if (tags == null) {
+                tags = '';
+            }
+
+            tags.split(',').forEach(function(tag) {
                 hashedTags += '#' + tag.trim() + ' ';
             });
             var tags = hashedTags.trim();

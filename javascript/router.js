@@ -1,8 +1,6 @@
 
 Dingbat.Router.map(function() {
     this.resource('tasks', { path: '/' }, function() {
-        this.route('high');
-        this.route('normal');
     });
 });
 
