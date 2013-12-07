@@ -20,6 +20,7 @@
         "semantic-ui": "https://github.com/Semantic-Org/Semantic-UI.git#0.9.5",
         "ember.js": "v1.2.0",
         "ember-data": "v1.0.0-beta.3",
-        "handlebars.js": "v1.1.2"
+        "handlebars.js": "v1.1.2",
+        "ember-localstorage-adapter": "master"
     }
 }

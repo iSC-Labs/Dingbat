@@ -2,8 +2,6 @@ Dingbat.TaskController = Ember.ObjectController.extend({
 
     isEditing: false,
 
-    bla: 'sadasd',
-
     actions: {
 
         editTask: function() {

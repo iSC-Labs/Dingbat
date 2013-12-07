@@ -9,6 +9,8 @@ Dingbat.Task = DS.Model.extend({
 
     tags: DS.attr('string'),
 
+    list: DS.belongsTo('list'),
+
     parsePriority: function() {
         var title    = this.get('title');
         var priority = this.get('priority');
@@ -91,20 +93,23 @@ Dingbat.Task.FIXTURES = [
         title: 'kiss a chicken',
         priority: 'high',
         isCompleted: true,
-        tags: 'bug, setup, ui'
+        tags: 'bug, setup, ui',
+        list: 1
     },
     {
         id: 2,
         title: 'save whale',
         priority: 'high',
         isCompleted: false,
-        tags: 'feature, ui'
+        tags: 'feature, ui',
+        list: 1
     },
     {
         id: 3,
         title: 'do something',
         priority: 'normal',
         isCompleted: false,
-        tags: 'bug, setup'
+        tags: 'bug, setup',
+        list: 1
     }
 ];
