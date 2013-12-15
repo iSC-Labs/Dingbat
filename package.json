@@ -1,0 +1,22 @@
+{
+  "name": "dingbat",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "application.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pklink/Dingbat.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "gitHead": "ea20e225fb0fb88e3fb9ada659023284a2cdc047",
+    "devDependencies": {
+        "grunt-cli": "v0.1.11",
+        "grunt": "~0.4.2",
+        "grunt-contrib-jshint": "~0.6.3",
+        "grunt-contrib-uglify": "~0.2.2"
+    }
+}
