@@ -10,6 +10,10 @@ module.exports = function(grunt) {
             build: {
                 src:  'src/**/*.js',
                 dest: 'build/<%= pkg.name %>.min.js'
+            },
+            templates: {
+                src:  'build/templates.js',
+                dest: 'build/templates.min.js'
             }
         },
         cssmin: {
@@ -50,16 +54,32 @@ module.exports = function(grunt) {
                     flatten: true
                 }]
             }
+        },
+        emberTemplates: {
+            compile: {
+                options: {
+                    templateBasePath: /templates\//
+                },
+                files: {
+                    "build/templates.js": 'templates/**/*.hbs'
+                }
+            }
+        },
+        clean: {
+            build: {
+                src: 'build/templates.js'
+            }
         }
-
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-ember-templates');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Default task(s).
-    grunt.registerTask('default', ['copy', 'concat', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['emberTemplates', 'copy', 'concat', 'uglify', 'cssmin', 'clean']);
 
 };

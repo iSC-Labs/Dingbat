@@ -1,0 +1,46 @@
+<!-- add form -->
+<div class="ui fluid large icon input">
+    {{input type="text" placeholder="New Task" value=title action="createTask"}}
+    <div class="ui large icon button"><i class="add sign icon"></i></div>
+</div>
+
+<!-- list -->
+<div class="ui segment">
+
+    {{#if high}}
+        <div class="ui red ribbon label">High</div>
+        <div class="ui relaxed divided selection list">
+            {{#each high}}
+                {{partial "item"}}
+            {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if normal}}
+        <div class="ui teal ribbon label">Normal</div>
+        <div class="ui relaxed divided selection list">
+            {{#each normal}}
+                {{partial "item"}}
+            {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if low}}
+        <div class="ui green ribbon label">Low</div>
+        <div class="ui relaxed divided selection list">
+            {{#each low}}
+                {{partial "item"}}
+            {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if completed}}
+        <div class="ui ribbon label">Archive</div>
+        <div class="ui relaxed divided selection list">
+            {{#each completed}}
+                {{partial "tasks/_item"}}
+            {{/each}}
+        </div>
+    {{/if}}
+
+</div>

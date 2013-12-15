@@ -1,0 +1,17 @@
+<div class="item">
+    {{#if isEditMode}}
+        <div class="ui large fluid input">
+            {{edit-list-input value=title insert-newline="update" escape-press="disableEditMode"}}
+        </div>
+    {{else}}
+        <div class="right floated">
+            <a {{action "enableEditMode"}}><i class="ui small pencil icon"></i></a>
+            <a {{action "delete"}}><i class="ui small remove icon"></i></a>
+            <div class="ui label">{{remaining}}</div>
+        </div>
+        <i class="angle right icon"></i>
+        <div class="content">
+            <a {{action "showTasks"}}>{{title}}</a>
+        </div>
+    {{/if}}
+</div>
