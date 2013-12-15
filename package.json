@@ -13,10 +13,15 @@
   "author": "",
   "license": "BSD",
   "gitHead": "ea20e225fb0fb88e3fb9ada659023284a2cdc047",
-    "devDependencies": {
-        "grunt-cli": "v0.1.11",
-        "grunt": "~0.4.2",
-        "grunt-contrib-jshint": "~0.6.3",
-        "grunt-contrib-uglify": "~0.2.2"
-    }
+  "devDependencies": {
+    "grunt-cli": "v0.1.11",
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-bower": "~0.7.0",
+    "grunt-bower-concat": "~0.2.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-copy": "~0.4.1"
+  }
 }
