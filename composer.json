@@ -13,9 +13,6 @@
         "silex/silex": "v1.1.2",
         "pklink/dotor": "0.2",
         "phormium/phormium": "0.5",
-        "tedivm/jshrink": "v0.5.1",
-        "kriswallsmith/assetic": "v1.1.2",
-        "symfony/translation": "v2.4.0",
         "symfony/config": "v2.4.0",
         "symfony/yaml": "v2.4.0"
     },

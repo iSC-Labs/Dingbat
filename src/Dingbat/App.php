@@ -59,24 +59,6 @@ class App
         $this->silex          = new Application();
         $this->silex['debug'] = $this->config->getBool('debugging', false);
 
-        // register i18n service
-        $this->silex->register(new TranslationServiceProvider(), array(
-            'locale_fallbacks' => array('en'),
-            'locale'           => $this->config->get('language'),
-        ));
-
-        // add translations
-        $this->silex['translator'] = $this->silex->share($this->silex->extend('translator', function($translator) {
-            /* @var Translator $translator */
-            $translator->addLoader('yaml', new YamlFileLoader());
-
-            $localePath = $this->config->get('rootDirectory', 'bla') . '/src/res/locales';
-            $translator->addResource('yaml', $localePath . '/en.yml', 'en');
-            $translator->addResource('yaml', $localePath . '/de.yml', 'de');
-
-            return $translator;
-        }));
-
         // set instance of Request
         $this->silex->before(function (Request $request) {
             if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
@@ -175,22 +157,6 @@ class App
      */
     protected function setRoutes()
     {
-        // layout
-        $this->silex->get('/', function() {
-            ob_start();
-
-            $appName = $this->config->get('name', 'Dingbat');
-            $locale  = $this->silex['translator'];
-
-            require(__DIR__ . '/../../views/layout.php');
-            return ob_get_clean();
-        });
-
-        // js
-        $this->silex->get('/assets/js', function() {
-            return $this->prepareAction(new Action\Assets\JavaScript())->run();
-        });
-
         // cards
         $this->silex->post('/cards', function() {
             return $this->prepareAction(new Action\Card\Create())->run();
@@ -211,17 +177,6 @@ class App
         $this->silex->delete('/cards/{slug}', function($slug) {
             return $this->prepareAction(new Action\Card\Delete())->run($slug);
         });
-
-
-
-
-
-        /*
-        $this->silex->get('/cards/{filter}', function($filter) {
-            return $this->prepareAction(new Action\Card\GetAll())->run($filter);
-        });
-        */
-
 
 
         // tasks
