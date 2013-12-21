@@ -6,10 +6,7 @@ namespace Dingbat;
 use Dotor\Dotor;
 use Phormium\DB;
 use Silex\Application;
-use Silex\Provider\TranslationServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\Loader\YamlFileLoader;
-use Symfony\Component\Translation\Translator;
 
 /**
  * Class App
