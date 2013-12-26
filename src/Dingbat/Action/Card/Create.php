@@ -29,9 +29,8 @@ class Create extends Action
      */
     public function run()
     {
-        $request = $this->request;
-        $name    = $request->post('name', false);
-        $slug    = strtolower($request->post('slug', ''));
+        $name    = $this->request->post('name', false);
+        $slug    = strtolower($this->request->post('slug', ''));
 
         // check name
         if ($name === false) {
