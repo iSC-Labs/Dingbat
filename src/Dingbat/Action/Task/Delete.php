@@ -5,7 +5,6 @@ namespace Dingbat\Action\Task;
 
 use Dingbat\Action;
 use Dingbat\Model\Task;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Delete
@@ -25,10 +24,8 @@ class Delete extends Action
 
 
     /**
-     * Remove task with ID $id
-     *
      * @param integer $id ID of task
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      */
     public function run($id)
     {
@@ -38,7 +35,7 @@ class Delete extends Action
         try {
             $task = Task::get($id);
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'code'    => Delete::CODE_TASK_DOES_NOT_EXIST,
                 'message' => sprintf('task with `id` `%d` does not exist', $id)
             ]);
@@ -48,12 +45,12 @@ class Delete extends Action
         try {
             $task->delete();
 
-            return JsonResponse::create([
+            return $this->response->send([
                 'code'    => Delete::CODE_ALL_FINE,
                 'message' => 'all fine'
             ]);
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'code'    => Delete::CODE_UNKNOW_ERROR,
                 'message' => $e->getMessage()
             ]);

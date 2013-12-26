@@ -3,7 +3,8 @@
 
 namespace Dingbat;
 
-use Symfony\Component\HttpFoundation\Request;
+use Hahns\Request;
+use Hahns\Response;
 
 /**
  * Class Action
@@ -25,10 +26,23 @@ abstract class Action
     protected $request;
 
     /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
      * @param Request $request
      */
     public function setRequest(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * @param Response $respone
+     */
+    public function setResponse(Response $respone)
+    {
+        $this->response = $respone;
     }
 }

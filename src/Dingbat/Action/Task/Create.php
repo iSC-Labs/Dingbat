@@ -6,7 +6,6 @@ namespace Dingbat\Action\Task;
 use Dingbat\Action;
 use Dingbat\Model\Card;
 use Dingbat\Model\Task;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Add
@@ -28,17 +27,18 @@ class Create extends Action
     const CODE_UNKNOWN_ERROR = 999;
 
     /**
-     * Create new task
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      */
     public function run()
     {
-        $request = $this->request;
+        $name     = $this->request->post('name', false);
+        $marked   = $this->request->post('marked', false);
+        $priority = $this->request->post('priority', Task::PRIORITY_NORMAL);
+        $cardid   = $this->request->post('cardId', false);
 
         // check if cardId is set
-        if ($request->get('cardId', false) === false) {
-            return JsonResponse::create([
+        if ($cardid === false) {
+            return $this->response->send([
                 'id'      => null,
                 'code'    => Create::CODE_CARD_ID_IS_NOT_GIVEN,
                 'message' => 'param `cardId` is required'
@@ -46,17 +46,17 @@ class Create extends Action
         }
 
         // check if cardId is exist
-        if (!Card::exists($request->get('cardId'))) {
-            return JsonResponse::create([
+        if (!Card::exists($cardid)) {
+            return $this->response->send([
                 'id'      => null,
                 'code'    => Create::CODE_CARD_DOES_NOT_EXIST,
-                'message' => sprintf('card with id `%d` does not exist', $request->get('cardId'))
+                'message' => sprintf('card with id `%d` does not exist', $cardid)
             ]);
         }
 
         // check if `name` is set
-        if ($request->get('name', false) === false) {
-            return JsonResponse::create([
+        if ($name === false) {
+            return $this->response->send([
                 'id'      => null,
                 'code'    => Create::CODE_NAME_IS_NOT_GIVEN,
                 'message' => 'param `name` is required'
@@ -64,8 +64,8 @@ class Create extends Action
         }
 
         // check if `priority` value
-        if (!in_array($request->get('priority', 'normal'), ['normal', 'high', 'low'])) {
-            return JsonResponse::create([
+        if (!in_array($priority, ['normal', 'high', 'low'])) {
+            return $this->response->send([
                 'id'      => null,
                 'code'    => Create::CODE_PRIORITY_IS_INVALID,
                 'message' => 'param `priority` must be `normal`, `high` or `low`'
@@ -75,19 +75,19 @@ class Create extends Action
         // save task
         try {
             $task = new Task();
-            $task->name     = $request->get('name');
-            $task->marked   = $request->get('marked', false);
-            $task->priority = $request->get('priority', Task::PRIORITY_NORMAL);
-            $task->cardid   = $request->get('cardId', 1);
+            $task->name     = $name;
+            $task->marked   = $marked;
+            $task->priority = $priority;
+            $task->cardid   = $cardid;
             $task->save();
 
-            return JsonResponse::create([
+            return $this->response->send([
                 'id'      => (int) $task->id,
                 'code'    => Create::CODE_ALL_FINE,
                 'message' => 'all fine'
             ]);
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'id'      => null,
                 'code'    => Create::CODE_UNKNOWN_ERROR,
                 'message' => $e->getMessage()

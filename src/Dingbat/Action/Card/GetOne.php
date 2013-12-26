@@ -5,7 +5,6 @@ namespace Dingbat\Action\Card;
 
 use Dingbat\Action;
 use Dingbat\Model\Card;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Get
@@ -24,7 +23,7 @@ class GetOne extends Action
 
     /**
      * @param string $slug
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      */
     public function run($slug)
     {
@@ -33,13 +32,13 @@ class GetOne extends Action
             /* @var Card $card */
             $card = Card::objects()->filter('slug', '=', $slug)->single();
 
-            return JsonResponse::create([
+            return $this->response->send([
                 'id'   => (int) $card->id,
                 'name' => $card->name,
                 'slug' => $card->slug
             ]);
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'code'     => GetOne::CODE_TASK_DOES_NOT_EXIST,
                 'message'  => 'card does not exist'
             ], 404);

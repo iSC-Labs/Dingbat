@@ -6,7 +6,6 @@ namespace Dingbat\Action\Card;
 use Dingbat\Action;
 use Dingbat\Helper\SlugHelper;
 use Dingbat\Model\Card;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Update
@@ -28,12 +27,10 @@ class Update extends Action
 
     /**
      * @param string $slug
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      */
     public function run($slug)
     {
-        $request = $this->request->request;
-
         /* @var Card $card */
         $card = null;
 
@@ -41,21 +38,21 @@ class Update extends Action
         try {
             $card = Card::objects()->filter('slug', '=', $slug)->single();
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'code'    => Update::CODE_CARD_DOES_NOT_EXIST,
                 'message' => 'card does not exist'
             ], 404);
         }
 
         // get name and slug from payload
-        $name = $request->get('name', false);
-        $slug = $request->get('slug', false);
+        $name = $this->request->payload('name', false);
+        $slug = $this->request->payload('slug', false);
 
         // set name
         if ($name !== false) {
             // check if name is not empty
             if (strlen($name) == 0) {
-                return JsonResponse::create([
+                return $this->response->send([
                     'code'    => Update::CODE_NAME_CANNOT_BE_EMPTY,
                     'message' => '`name` cannot be empty'
                 ], 400);
@@ -71,7 +68,7 @@ class Update extends Action
 
             // check if slug is not empty
             if (strlen($slug) == 0) {
-                return JsonResponse::create([
+                return $this->response->send([
                     'code'    => Update::CODE_SLUG_CANNOT_BE_EMPTY,
                     'message' => '`name` cannot be empty'
                 ]);
@@ -81,7 +78,7 @@ class Update extends Action
             $sluggedCard = Card::objects()->filter('slug', '=', $slug)->single(true);
 
             if ($sluggedCard instanceof Card && $sluggedCard->id != $card->id) {
-                return JsonResponse::create([
+                return $this->response->send([
                     'code'    => Update::CODE_SLUG_DUPLICATE,
                     'message' => 'duplicate entry for `slug`'
                 ], 409);
@@ -94,11 +91,11 @@ class Update extends Action
         try {
             $card->update();
 
-            return JsonResponse::create([
+            return $this->response->send([
                 'uri' => sprintf('/cards/%s', $card->slug)
             ]);
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'code'    => Update::CODE_UNKNOWN_ERROR,
                 'message' => $e->getMessage()
             ], 500);

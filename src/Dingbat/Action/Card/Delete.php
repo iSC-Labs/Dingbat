@@ -6,7 +6,6 @@ namespace Dingbat\Action\Card;
 use Dingbat\Action;
 use Dingbat\Model\Card;
 use Dingbat\Model\Task;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Delete
@@ -22,7 +21,7 @@ class Delete extends Action
 
     /**
      * @param string $slug
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      */
     public function run($slug)
     {
@@ -44,6 +43,7 @@ class Delete extends Action
         } catch (\Exception $e) {
         }
 
-        return Response::create(null, 204);
+        $this->response->status(204);
+        return '';
     }
 }

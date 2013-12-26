@@ -2,19 +2,11 @@
     "autoload": {
         "psr-0": {
             "Dingbat": "src/"
-        },
-        "autoload": {
-            "files": [
-                "src/res/i18n/en.php"
-            ]
         }
     },
     "require": {
-        "silex/silex": "v1.1.2",
-        "pklink/dotor": "0.2",
-        "phormium/phormium": "0.5",
-        "symfony/config": "v2.4.0",
-        "symfony/yaml": "v2.4.0"
+        "pklink/hahns": "0.6.4",
+        "phormium/phormium": "0.5"
     },
     "require-dev": {
         "codeception/codeception": "1.8.1"

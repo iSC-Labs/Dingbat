@@ -3,10 +3,10 @@
 
 namespace Dingbat;
 
-use Dotor\Dotor;
+use Hahns\Hahns;
+use Hahns\Request;
+use Hahns\Response;
 use Phormium\DB;
-use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class App
@@ -21,24 +21,14 @@ class App
 {
 
     /**
-     * @var \Dotor\Dotor
-     */
-    protected $config;
-
-    /**
      * @var App
      */
     protected static $instance;
 
     /**
-     * @var Request
+     * @var Hahns
      */
-    protected $request;
-
-    /**
-     * @var \Silex\Application
-     */
-    protected $silex;
+    protected $hahns;
 
     /**
      * @param string $rootDirectory Root of application (normally where the index.html is found)
@@ -46,25 +36,16 @@ class App
      */
     protected function __construct($rootDirectory, array $config = [])
     {
-        // add route directory to $config
+        // create Hahns
+        $this->hahns = new Hahns();
+
+        // add root directory to $config
         $config['rootDirectory'] = $rootDirectory;
 
-        // create config
-        $this->config = new Dotor($config);
-
-        // create app
-        $this->silex          = new Application();
-        $this->silex['debug'] = $this->config->getBool('debugging', false);
-
-        // set instance of Request
-        $this->silex->before(function (Request $request) {
-            if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-                $data = json_decode($request->getContent(), true);
-                $request->request->replace(is_array($data) ? $data : array());
-            }
-
-            $this->request = $request;
-        });
+        // set config
+        foreach ($config as $name => $value) {
+            $this->hahns->config($name, $value);
+        }
 
         $this->prepareDatabase();
         $this->setRoutes();
@@ -91,36 +72,15 @@ class App
     }
 
     /**
-     * @return Dotor
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * @return Application
-     */
-    public function getSilex()
-    {
-        return $this->silex;
-    }
-
-    /**
      * @param Action $action
+     * @param Request $request
+     * @param Response $response
      * @return Action
      */
-    public function prepareAction(Action $action)
+    public function prepareAction(Action $action, Request $request, Response $response)
     {
-        $action->setRequest($this->getRequest());
+        $action->setRequest($request);
+        $action->setResponse($response);
         return $action;
     }
 
@@ -132,13 +92,13 @@ class App
         DB::configure([
             'databases' => [
                 'todo' => [
-                    'dsn'      => sprintf(
+                    'dsn' => sprintf(
                         'mysql:host=%s;dbname=%s',
-                        $this->config->get('database.host'),
-                        $this->config->get('database.name')
+                        $this->hahns->config('db-host'),
+                        $this->hahns->config('db-name')
                     ),
-                    'username' => $this->config->get('database.username'),
-                    'password' => $this->config->get('database.password'),
+                    'username' => $this->hahns->config('db-username'),
+                    'password' => $this->hahns->config('db-password')
                 ]
             ]
         ]);
@@ -149,7 +109,7 @@ class App
      */
     public function run()
     {
-        $this->silex->run();
+        $this->hahns->run();
     }
 
     /**
@@ -158,50 +118,57 @@ class App
     protected function setRoutes()
     {
         // cards
-        $this->silex->post('/cards', function () {
-            return $this->prepareAction(new Action\Card\Create())->run();
+        $this->hahns->post('/cards', function (Request $request, Response\Json $response) {
+            return $this->prepareAction(new Action\Card\Create(), $request, $response)->run();
         });
 
-        $this->silex->get('/cards', function () {
-            return $this->prepareAction(new Action\Card\GetAll())->run();
+        $this->hahns->get('/cards', function (Request $request, Response\Json $response) {
+            return $this->prepareAction(new Action\Card\GetAll(), $request, $response)->run();
         });
 
-        $this->silex->get('/cards/{slug}', function ($slug) {
-            return $this->prepareAction(new Action\Card\GetOne())->run($slug);
+        $this->hahns->get('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
+            $slug = $request->get('slug');
+            return $this->prepareAction(new Action\Card\GetOne(), $request, $response)->run($slug);
         });
 
-        $this->silex->put('/cards/{slug}', function ($slug) {
-            return $this->prepareAction(new Action\Card\Update())->run($slug);
+        $this->hahns->put('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
+            $slug = $request->get('slug');
+            return $this->prepareAction(new Action\Card\Update(), $request, $response)->run($slug);
         });
 
-        $this->silex->delete('/cards/{slug}', function ($slug) {
-            return $this->prepareAction(new Action\Card\Delete())->run($slug);
+        $this->hahns->delete('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
+            $slug = $request->get('slug');
+            return $this->prepareAction(new Action\Card\Delete(), $request, $response)->run($slug);
         });
 
 
         // tasks
-        $this->silex->post('/task', function () {
-            return $this->prepareAction(new Action\Task\Create())->run();
+        $this->hahns->post('/task', function (Request $request, Response\Json $response) {
+            return $this->prepareAction(new Action\Task\Create(), $request, $response)->run();
         });
 
-        $this->silex->get('/task/{id}', function ($id) {
-            return $this->prepareAction(new Action\Task\GetOne())->run($id);
+        $this->hahns->get('/task/[\d+:id]', function (Request $request, Response\Json $response) {
+            $id = $request->get('id');
+            return $this->prepareAction(new Action\Task\GetOne(), $request, $response)->run($id);
         });
 
-        $this->silex->get('/tasks', function () {
-            return $this->prepareAction(new Action\Task\GetAll())->run();
+        $this->hahns->get('/tasks', function (Request $request, Response\Json $response) {
+            return $this->prepareAction(new Action\Task\GetAll(), $request, $response)->run();
         });
 
-        $this->silex->get('/tasks/{filter}', function ($filter) {
-            return $this->prepareAction(new Action\Task\GetAll())->run($filter);
+        $this->hahns->get('/tasks/[.+:filter]', function (Request $request, Response\Json $response) {
+            $filter = $request->get('filter');
+            return $this->prepareAction(new Action\Task\GetAll(), $request, $response)->run($filter);
         });
 
-        $this->silex->put('/task/{id}', function ($id) {
-            return $this->prepareAction(new Action\Task\Update())->run($id);
+        $this->hahns->put('/task/[\d+:id]', function (Request $request, Response\Json $response) {
+            $id = $request->get('id');
+            return $this->prepareAction(new Action\Task\Update(), $request, $response)->run($id);
         });
 
-        $this->silex->delete('/task/{id}', function ($id) {
-            return $this->prepareAction(new Action\Task\Delete())->run($id);
+        $this->hahns->delete('/task/[\d+:id]', function (Request $request, Response\Json $response) {
+            $id = $request->get('id');
+            return $this->prepareAction(new Action\Task\Delete(), $request, $response)->run($id);
         });
 
     }

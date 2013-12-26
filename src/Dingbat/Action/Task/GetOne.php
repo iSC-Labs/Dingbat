@@ -5,7 +5,6 @@ namespace Dingbat\Action\Task;
 
 use Dingbat\Action;
 use Dingbat\Model\Task;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Get
@@ -24,10 +23,8 @@ class GetOne extends Action
 
 
     /**
-     * Update a task
-     *
      * @param int $id ID of task
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      */
     public function run($id)
     {
@@ -37,7 +34,7 @@ class GetOne extends Action
             /* @var Task $task */
             $task = Task::get($id);
 
-            return JsonResponse::create([
+            return $this->response->send([
                 'id'       => (int) $task->id,
                 'cardId'   => (int) $task->cardid,
                 'name'     => $task->name,
@@ -47,7 +44,7 @@ class GetOne extends Action
                 'message'  => 'all fine'
             ]);
         } catch (\Exception $e) {
-            return JsonResponse::create([
+            return $this->response->send([
                 'id'       => null,
                 'cardId'   => null,
                 'name'     => null,

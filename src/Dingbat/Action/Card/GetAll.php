@@ -5,7 +5,6 @@ namespace Dingbat\Action\Card;
 
 use Dingbat\Action;
 use Dingbat\Model\Card;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Index
@@ -21,7 +20,7 @@ class GetAll extends Action
 
     /**
      * @param string $filter attribute=value;otherattribute=value
-     * @return \Symfony\Component\HttpFoundation\Response|static
+     * @return string
      */
     public function run($filter = null)
     {
@@ -65,6 +64,6 @@ class GetAll extends Action
             ];
         }
 
-        return JsonResponse::create($cards);
+        return $this->response->send($cards);
     }
 }

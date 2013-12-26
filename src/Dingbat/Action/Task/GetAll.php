@@ -5,7 +5,6 @@ namespace Dingbat\Action\Task;
 
 use Dingbat\Action;
 use Dingbat\Model\Task;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Index
@@ -21,7 +20,7 @@ class GetAll extends Action
 
     /**
      * @param string $filter attribute=value;otherattribute=value
-     * @return \Symfony\Component\HttpFoundation\Response|static
+     * @return string
      */
     public function run($filter = null)
     {
@@ -72,6 +71,6 @@ class GetAll extends Action
             ];
         }
 
-        return JsonResponse::create($tasks);
+        return $this->response->send($tasks);
     }
 }
