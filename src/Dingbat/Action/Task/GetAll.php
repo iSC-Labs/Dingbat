@@ -28,12 +28,10 @@ class GetAll extends Action
         $objects = Task::objects();
 
         // filter
-        if ($filter != null)
-        {
+        if ($filter != null) {
             $conditions = explode(';', $filter);
 
-            foreach ($conditions as $condition)
-            {
+            foreach ($conditions as $condition) {
                 $splits = explode('=', $condition);
 
                 if (!isset($splits[1])) {
@@ -76,6 +74,4 @@ class GetAll extends Action
 
         return JsonResponse::create($tasks);
     }
-
 }
-

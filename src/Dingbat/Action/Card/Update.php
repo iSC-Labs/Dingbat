@@ -52,11 +52,9 @@ class Update extends Action
         $slug = $request->get('slug', false);
 
         // set name
-        if ($name !== false)
-        {
+        if ($name !== false) {
             // check if name is not empty
-            if (strlen($name) == 0)
-            {
+            if (strlen($name) == 0) {
                 return JsonResponse::create([
                     'code'    => Update::CODE_NAME_CANNOT_BE_EMPTY,
                     'message' => '`name` cannot be empty'
@@ -67,14 +65,12 @@ class Update extends Action
         }
 
         // set slug
-        if ($slug !== false)
-        {
+        if ($slug !== false) {
             // strip slug
             $slug = SlugHelper::convert($slug);
 
             // check if slug is not empty
-            if (strlen($slug) == 0)
-            {
+            if (strlen($slug) == 0) {
                 return JsonResponse::create([
                     'code'    => Update::CODE_SLUG_CANNOT_BE_EMPTY,
                     'message' => '`name` cannot be empty'
@@ -84,8 +80,7 @@ class Update extends Action
             // check if slug is duplicate
             $sluggedCard = Card::objects()->filter('slug', '=', $slug)->single(true);
 
-            if ($sluggedCard instanceof Card && $sluggedCard->id != $card->id)
-            {
+            if ($sluggedCard instanceof Card && $sluggedCard->id != $card->id) {
                 return JsonResponse::create([
                     'code'    => Update::CODE_SLUG_DUPLICATE,
                     'message' => 'duplicate entry for `slug`'
@@ -96,8 +91,7 @@ class Update extends Action
         }
 
         // save card
-        try
-        {
+        try {
             $card->update();
 
             return JsonResponse::create([
@@ -110,6 +104,4 @@ class Update extends Action
             ], 500);
         }
     }
-
 }
-

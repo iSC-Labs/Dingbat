@@ -22,15 +22,12 @@ class SlugHelper
     public static function convert($slug)
     {
         // remove invalid character from slug
-        for ($i = 0; $i < strlen($slug); $i++)
-        {
-            if (preg_match('/[a-z\d\-\+]/', $slug{$i}) === 0)
-            {
+        for ($i = 0; $i < strlen($slug); $i++) {
+            if (preg_match('/[a-z\d\-\+]/', $slug{$i}) === 0) {
                 $slug{$i} = chr(0);
             }
         }
 
         return str_replace(chr(0), '', $slug); // remove all NULs
     }
-
 }

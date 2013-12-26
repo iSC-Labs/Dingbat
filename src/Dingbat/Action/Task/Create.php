@@ -37,8 +37,7 @@ class Create extends Action
         $request = $this->request;
 
         // check if cardId is set
-        if ($request->get('cardId', false) === false)
-        {
+        if ($request->get('cardId', false) === false) {
             return JsonResponse::create([
                 'id'      => null,
                 'code'    => Create::CODE_CARD_ID_IS_NOT_GIVEN,
@@ -47,8 +46,7 @@ class Create extends Action
         }
 
         // check if cardId is exist
-        if (!Card::exists($request->get('cardId')))
-        {
+        if (!Card::exists($request->get('cardId'))) {
             return JsonResponse::create([
                 'id'      => null,
                 'code'    => Create::CODE_CARD_DOES_NOT_EXIST,
@@ -57,8 +55,7 @@ class Create extends Action
         }
 
         // check if `name` is set
-        if ($request->get('name', false) === false)
-        {
+        if ($request->get('name', false) === false) {
             return JsonResponse::create([
                 'id'      => null,
                 'code'    => Create::CODE_NAME_IS_NOT_GIVEN,
@@ -67,8 +64,7 @@ class Create extends Action
         }
 
         // check if `priority` value
-        if (!in_array($request->get('priority', 'normal'), ['normal', 'high', 'low']))
-        {
+        if (!in_array($request->get('priority', 'normal'), ['normal', 'high', 'low'])) {
             return JsonResponse::create([
                 'id'      => null,
                 'code'    => Create::CODE_PRIORITY_IS_INVALID,
@@ -98,6 +94,4 @@ class Create extends Action
             ]);
         }
     }
-
 }
-

@@ -37,8 +37,7 @@ class Create extends Action
         $slug    = strtolower($request->get('slug', ''));
 
         // check name
-        if ($name === false)
-        {
+        if ($name === false) {
             return JsonResponse::create([
                 'code'    => Create::CODE_NAME_IS_REQUIRED,
                 'message' => '`name` is required',
@@ -47,8 +46,7 @@ class Create extends Action
 
         // check slug
         $slug = SlugHelper::convert($slug);
-        if (strlen($slug) == 0)
-        {
+        if (strlen($slug) == 0) {
             return JsonResponse::create([
                 'code'    => Create::CODE_SLUG_IS_REQUIRED,
                 'message' => '`slug` is required'
@@ -56,8 +54,7 @@ class Create extends Action
         }
 
         // duplicate slug
-        if (Card::objects()->filter('slug', '=', $slug)->single(true) instanceof Card)
-        {
+        if (Card::objects()->filter('slug', '=', $slug)->single(true) instanceof Card) {
             return JsonResponse::create([
                 'code'    => Create::CODE_SLUG_DUPLICATE,
                 'message' => 'duplicate entry for `slug`'
@@ -85,6 +82,4 @@ class Create extends Action
             ], 500);
         }
     }
-
 }
-

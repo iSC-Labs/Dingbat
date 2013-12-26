@@ -78,11 +78,10 @@ class App
      */
     public static function instance($projectRoot = null, array $config = [])
     {
-        if (!(self::$instance instanceof App))
-        {
-            if (is_null($projectRoot))
-            {
-                throw new \InvalidArgumentException('At first call of Dingbat::instance() is the $projectPath-parameter required');
+        if (!(self::$instance instanceof App)) {
+            if (is_null($projectRoot)) {
+                $message = 'At first call of Dingbat::instance() is the $projectPath-parameter required';
+                throw new \InvalidArgumentException($message);
             }
 
             self::$instance = new static($projectRoot, $config);
@@ -133,7 +132,11 @@ class App
         DB::configure([
             'databases' => [
                 'todo' => [
-                    'dsn'      => sprintf('mysql:host=%s;dbname=%s', $this->config->get('database.host'), $this->config->get('database.name')),
+                    'dsn'      => sprintf(
+                        'mysql:host=%s;dbname=%s',
+                        $this->config->get('database.host'),
+                        $this->config->get('database.name')
+                    ),
                     'username' => $this->config->get('database.username'),
                     'password' => $this->config->get('database.password'),
                 ]
@@ -155,52 +158,51 @@ class App
     protected function setRoutes()
     {
         // cards
-        $this->silex->post('/cards', function() {
+        $this->silex->post('/cards', function () {
             return $this->prepareAction(new Action\Card\Create())->run();
         });
 
-        $this->silex->get('/cards', function() {
+        $this->silex->get('/cards', function () {
             return $this->prepareAction(new Action\Card\GetAll())->run();
         });
 
-        $this->silex->get('/cards/{slug}', function($slug) {
+        $this->silex->get('/cards/{slug}', function ($slug) {
             return $this->prepareAction(new Action\Card\GetOne())->run($slug);
         });
 
-        $this->silex->put('/cards/{slug}', function($slug) {
+        $this->silex->put('/cards/{slug}', function ($slug) {
             return $this->prepareAction(new Action\Card\Update())->run($slug);
         });
 
-        $this->silex->delete('/cards/{slug}', function($slug) {
+        $this->silex->delete('/cards/{slug}', function ($slug) {
             return $this->prepareAction(new Action\Card\Delete())->run($slug);
         });
 
 
         // tasks
-        $this->silex->post('/task', function() {
+        $this->silex->post('/task', function () {
             return $this->prepareAction(new Action\Task\Create())->run();
         });
 
-        $this->silex->get('/task/{id}', function($id) {
+        $this->silex->get('/task/{id}', function ($id) {
             return $this->prepareAction(new Action\Task\GetOne())->run($id);
         });
 
-        $this->silex->get('/tasks', function() {
+        $this->silex->get('/tasks', function () {
             return $this->prepareAction(new Action\Task\GetAll())->run();
         });
 
-        $this->silex->get('/tasks/{filter}', function($filter) {
+        $this->silex->get('/tasks/{filter}', function ($filter) {
             return $this->prepareAction(new Action\Task\GetAll())->run($filter);
         });
 
-        $this->silex->put('/task/{id}', function($id) {
+        $this->silex->put('/task/{id}', function ($id) {
             return $this->prepareAction(new Action\Task\Update())->run($id);
         });
 
-        $this->silex->delete('/task/{id}', function($id) {
+        $this->silex->delete('/task/{id}', function ($id) {
             return $this->prepareAction(new Action\Task\Delete())->run($id);
         });
 
     }
-
 }

@@ -40,5 +40,4 @@ class Card extends Model
      * @var string
      */
     public $slug;
-
 }

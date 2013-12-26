@@ -59,6 +59,4 @@ class GetOne extends Action
         }
 
     }
-
 }
-

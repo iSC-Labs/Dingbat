@@ -59,6 +59,4 @@ class Delete extends Action
             ]);
         }
     }
-
 }
-

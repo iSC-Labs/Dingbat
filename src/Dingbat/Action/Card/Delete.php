@@ -34,18 +34,16 @@ class Delete extends Action
             // delete all tasks of the card
             $tasks = Task::objects()->filter('cardid', '=', $card->id)->fetch();
 
-            foreach ($tasks as $task)
-            {
+            foreach ($tasks as $task) {
                 /* @var \Dingbat\Model\Task $task */
                 $task->delete();
             }
 
             // delete card
             $card->delete();
-        } catch (\Exception $e) { }
+        } catch (\Exception $e) {
+        }
 
         return Response::create(null, 204);
     }
-
 }
-

@@ -51,8 +51,7 @@ class Update extends Action
         }
 
         // check if cardId is set
-        if ($request->get('cardId', false) === false)
-        {
+        if ($request->get('cardId', false) === false) {
             return JsonResponse::create([
                 'code'    => Update::CODE_CARD_ID_IS_NOT_GIVEN,
                 'message' => 'param `cardId` is required'
@@ -60,8 +59,7 @@ class Update extends Action
         }
 
         // check if cardId is exist
-        if (!Card::exists($request->get('cardId')))
-        {
+        if (!Card::exists($request->get('cardId'))) {
             return JsonResponse::create([
                 'code'    => Update::CODE_CARD_DOES_NOT_EXIST,
                 'message' => sprintf('card with id `%d` does not exist', $request->get('cardId'))
@@ -69,8 +67,7 @@ class Update extends Action
         }
 
         // check if `name` is set
-        if ($request->get('name', false) === false)
-        {
+        if ($request->get('name', false) === false) {
             return JsonResponse::create([
                 'code'    => Update::CODE_NAME_IS_NOT_GIVEN,
                 'message' => 'param `name` is required'
@@ -78,8 +75,7 @@ class Update extends Action
         }
 
         // check if `priority` value
-        if (!in_array($request->get('priority', 'normal'), ['normal', 'high', 'low']))
-        {
+        if (!in_array($request->get('priority', 'normal'), ['normal', 'high', 'low'])) {
             return JsonResponse::create([
                 'code'    => Update::CODE_PRIORITY_IS_INVALID,
                 'message' => 'param `priority` must be `normal`, `high` or `low`'
@@ -87,8 +83,7 @@ class Update extends Action
         }
 
         // save task
-        try
-        {
+        try {
             $task->name     = $request->get('name');
             $task->marked   = $request->get('marked');
             $task->priority = $request->get('priority', Task::PRIORITY_NORMAL);
@@ -106,6 +101,4 @@ class Update extends Action
             ]);
         }
     }
-
 }
-

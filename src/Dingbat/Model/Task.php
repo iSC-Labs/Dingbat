@@ -54,5 +54,4 @@ class Task extends Model
      * @var int
      */
     public $cardid;
-
 }
