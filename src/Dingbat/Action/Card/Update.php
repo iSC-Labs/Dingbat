@@ -26,11 +26,12 @@ class Update extends Action
     const CODE_UNKNOWN_ERROR        = 999;
 
     /**
-     * @param string $slug
      * @return string
      */
-    public function run($slug)
+    public function run()
     {
+        $slug = $this->request->get('slug');
+
         /* @var Card $card */
         $card = null;
 

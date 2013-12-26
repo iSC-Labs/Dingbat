@@ -127,18 +127,15 @@ class App
         });
 
         $this->hahns->get('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
-            $slug = $request->get('slug');
-            return $this->prepareAction(new Action\Card\GetOne(), $request, $response)->run($slug);
+            return $this->prepareAction(new Action\Card\GetOne(), $request, $response)->run();
         });
 
         $this->hahns->put('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
-            $slug = $request->get('slug');
-            return $this->prepareAction(new Action\Card\Update(), $request, $response)->run($slug);
+            return $this->prepareAction(new Action\Card\Update(), $request, $response)->run();
         });
 
         $this->hahns->delete('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
-            $slug = $request->get('slug');
-            return $this->prepareAction(new Action\Card\Delete(), $request, $response)->run($slug);
+            return $this->prepareAction(new Action\Card\Delete(), $request, $response)->run();
         });
 
 
@@ -148,8 +145,7 @@ class App
         });
 
         $this->hahns->get('/task/[\d+:id]', function (Request $request, Response\Json $response) {
-            $id = $request->get('id');
-            return $this->prepareAction(new Action\Task\GetOne(), $request, $response)->run($id);
+            return $this->prepareAction(new Action\Task\GetOne(), $request, $response)->run();
         });
 
         $this->hahns->get('/tasks', function (Request $request, Response\Json $response) {
@@ -157,18 +153,15 @@ class App
         });
 
         $this->hahns->get('/tasks/[.+:filter]', function (Request $request, Response\Json $response) {
-            $filter = $request->get('filter');
-            return $this->prepareAction(new Action\Task\GetAll(), $request, $response)->run($filter);
+            return $this->prepareAction(new Action\Task\GetAll(), $request, $response)->run();
         });
 
         $this->hahns->put('/task/[\d+:id]', function (Request $request, Response\Json $response) {
-            $id = $request->get('id');
-            return $this->prepareAction(new Action\Task\Update(), $request, $response)->run($id);
+            return $this->prepareAction(new Action\Task\Update(), $request, $response)->run();
         });
 
         $this->hahns->delete('/task/[\d+:id]', function (Request $request, Response\Json $response) {
-            $id = $request->get('id');
-            return $this->prepareAction(new Action\Task\Delete(), $request, $response)->run($id);
+            return $this->prepareAction(new Action\Task\Delete(), $request, $response)->run();
         });
 
     }

@@ -22,11 +22,12 @@ class GetOne extends Action
 
 
     /**
-     * @param string $slug
      * @return string
      */
-    public function run($slug)
+    public function run()
     {
+        $slug = $this->request->get('slug');
+
         // get card
         try {
             /* @var Card $card */

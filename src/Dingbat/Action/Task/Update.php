@@ -29,11 +29,11 @@ class Update extends Action
 
 
     /**
-     * @param int $id ID of task
      * @return string
      */
-    public function run($id)
+    public function run()
     {
+        $id       = $this->request->get('id');
         $name     = $this->request->payload('name', false);
         $marked   = $this->request->payload('marked');
         $priority = $this->request->payload('priority', Task::PRIORITY_NORMAL);

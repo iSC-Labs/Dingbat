@@ -24,11 +24,11 @@ class Delete extends Action
 
 
     /**
-     * @param integer $id ID of task
      * @return string
      */
-    public function run($id)
+    public function run()
     {
+        $id   = $this->request->get('id');
         $task = null;
 
         // get task

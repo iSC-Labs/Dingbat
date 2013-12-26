@@ -23,13 +23,13 @@ class GetOne extends Action
 
 
     /**
-     * @param int $id ID of task
      * @return string
      */
-    public function run($id)
+    public function run()
     {
-        // get task
+        $id = $this->request->get('id');
 
+        // get task
         try {
             /* @var Task $task */
             $task = Task::get($id);

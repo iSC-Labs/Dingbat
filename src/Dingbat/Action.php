@@ -14,8 +14,6 @@ use Hahns\Response;
  * @author   Pierre Klink <dev@klinks.info>
  * @license  MIT http://opensource.org/licenses/MIT
  * @link     https://github.com/pklink/Dingbat
- *
- * @method run
  */
 abstract class Action
 {
@@ -29,6 +27,11 @@ abstract class Action
      * @var Response
      */
     protected $response;
+
+    /**
+     * @return string
+     */
+    abstract public function run();
 
     /**
      * @param Request $request

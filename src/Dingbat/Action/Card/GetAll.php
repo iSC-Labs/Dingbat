@@ -19,11 +19,11 @@ class GetAll extends Action
 {
 
     /**
-     * @param string $filter attribute=value;otherattribute=value
      * @return string
      */
-    public function run($filter = null)
+    public function run()
     {
+        $filter  = $this->request->get('filter');
         $objects = Card::objects();
 
         // filter

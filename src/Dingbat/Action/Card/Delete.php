@@ -20,11 +20,12 @@ class Delete extends Action
 {
 
     /**
-     * @param string $slug
      * @return string
      */
-    public function run($slug)
+    public function run()
     {
+        $slug = $this->request->get('slug');
+
         // get card and delete it
         try {
             /* @var Card $card */
