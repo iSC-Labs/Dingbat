@@ -21,11 +21,6 @@ class App
 {
 
     /**
-     * @var App
-     */
-    protected static $instance;
-
-    /**
      * @var Hahns
      */
     protected $hahns;
@@ -33,7 +28,7 @@ class App
     /**
      * @param array $config configuration of application
      */
-    protected function __construct(array $config = [])
+    public function __construct(array $config = [])
     {
         // create Hahns
         $this->hahns = new Hahns();
@@ -45,26 +40,6 @@ class App
 
         $this->prepareDatabase();
         $this->setRoutes();
-    }
-
-    /**
-     * @param string $projectRoot path to root path of project
-     * @param array $config
-     * @return App
-     * @throws \InvalidArgumentException
-     */
-    public static function instance($projectRoot = null, array $config = [])
-    {
-        if (!(self::$instance instanceof App)) {
-            if (is_null($projectRoot)) {
-                $message = 'At first call of Dingbat::instance() is the $projectPath-parameter required';
-                throw new \InvalidArgumentException($message);
-            }
-
-            self::$instance = new static($projectRoot, $config);
-        }
-
-        return self::$instance;
     }
 
     /**
