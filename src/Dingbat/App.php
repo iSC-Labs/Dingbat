@@ -31,16 +31,12 @@ class App
     protected $hahns;
 
     /**
-     * @param string $rootDirectory Root of application (normally where the index.html is found)
-     * @param array  $config        configuration of application
+     * @param array $config configuration of application
      */
-    protected function __construct($rootDirectory, array $config = [])
+    protected function __construct(array $config = [])
     {
         // create Hahns
         $this->hahns = new Hahns();
-
-        // add root directory to $config
-        $config['rootDirectory'] = $rootDirectory;
 
         // set config
         foreach ($config as $name => $value) {
