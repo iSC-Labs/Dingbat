@@ -6,7 +6,8 @@
     },
     "require": {
         "pklink/hahns": "0.6.4",
-        "phormium/phormium": "0.5"
+        "phormium/phormium": "0.5",
+        "kevinlebrun/slug.php": "1.0.1"
     },
     "require-dev": {
         "codeception/codeception": "1.8.1"

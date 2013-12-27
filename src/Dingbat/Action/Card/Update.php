@@ -4,7 +4,6 @@
 namespace Dingbat\Action\Card;
 
 use Dingbat\Action;
-use Dingbat\Helper\SlugHelper;
 use Dingbat\Model\Card;
 
 /**
@@ -64,8 +63,7 @@ class Update extends Action
 
         // set slug
         if ($slug !== false) {
-            // strip slug
-            $slug = SlugHelper::convert($slug);
+            $slug = $this->services->get('slugifier')->slugify($slug);
 
             // check if slug is not empty
             if (strlen($slug) == 0) {

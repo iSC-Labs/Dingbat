@@ -5,6 +5,7 @@ namespace Dingbat;
 
 use Hahns\Request;
 use Hahns\Response;
+use Hahns\Services;
 
 /**
  * Class Action
@@ -29,6 +30,11 @@ abstract class Action
     protected $response;
 
     /**
+     * @var Services
+     */
+    protected $services;
+
+    /**
      * @return string
      */
     abstract public function run();
@@ -47,5 +53,13 @@ abstract class Action
     public function setResponse(Response $respone)
     {
         $this->response = $respone;
+    }
+
+    /**
+     * @param Services $services
+     */
+    public function setServices(Services $services)
+    {
+        $this->services = $services;
     }
 }

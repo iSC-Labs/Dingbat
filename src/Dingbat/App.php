@@ -6,7 +6,9 @@ namespace Dingbat;
 use Hahns\Hahns;
 use Hahns\Request;
 use Hahns\Response;
+use Hahns\Services;
 use Phormium\DB;
+use Slug\Slugifier;
 
 /**
  * Class App
@@ -39,19 +41,26 @@ class App
         }
 
         $this->prepareDatabase();
+        $this->setServices();
         $this->setRoutes();
     }
 
     /**
-     * @param Action $action
-     * @param Request $request
+     * @param Action   $action
+     * @param Request  $request
      * @param Response $response
+     * @param Services $services
      * @return Action
      */
-    public function prepareAction(Action $action, Request $request, Response $response)
+    public function prepareAction(Action $action, Request $request, Response $response, Services $services = null)
     {
         $action->setRequest($request);
         $action->setResponse($response);
+
+        if ($services instanceof Services) {
+            $action->setServices($services);
+        }
+
         return $action;
     }
 
@@ -89,8 +98,8 @@ class App
     protected function setRoutes()
     {
         // cards
-        $this->hahns->post('/cards', function (Request $request, Response\Json $response) {
-            return $this->prepareAction(new Action\Card\Create(), $request, $response)->run();
+        $this->hahns->post('/cards', function (Request $request, Response\Json $response, Services $services) {
+            return $this->prepareAction(new Action\Card\Create(), $request, $response, $services)->run();
         });
 
         $this->hahns->get('/cards', function (Request $request, Response\Json $response) {
@@ -101,8 +110,8 @@ class App
             return $this->prepareAction(new Action\Card\GetOne(), $request, $response)->run();
         });
 
-        $this->hahns->put('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
-            return $this->prepareAction(new Action\Card\Update(), $request, $response)->run();
+        $this->hahns->put('/cards/[.+:slug]', function (Request $request, Response\Json $response, Services $services) {
+            return $this->prepareAction(new Action\Card\Update(), $request, $response, $services)->run();
         });
 
         $this->hahns->delete('/cards/[.+:slug]', function (Request $request, Response\Json $response) {
@@ -134,6 +143,16 @@ class App
         $this->hahns->delete('/task/[\d+:id]', function (Request $request, Response\Json $response) {
             return $this->prepareAction(new Action\Task\Delete(), $request, $response)->run();
         });
+    }
 
+    /**
+     * @return void
+     */
+    public function setServices()
+    {
+        $this->hahns->service('slugifier', function () {
+            $service = new Slugifier();
+            return $service;
+        });
     }
 }

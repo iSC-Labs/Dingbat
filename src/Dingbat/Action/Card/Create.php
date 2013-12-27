@@ -4,7 +4,6 @@
 namespace Dingbat\Action\Card;
 
 use Dingbat\Action;
-use Dingbat\Helper\SlugHelper;
 use Dingbat\Model\Card;
 
 /**
@@ -41,7 +40,7 @@ class Create extends Action
         }
 
         // check slug
-        $slug = SlugHelper::convert($slug);
+        $slug = $this->services->get('slugifier')->slugify($slug);
         if (strlen($slug) == 0) {
             return $this->response->send([
                 'code'    => Create::CODE_SLUG_IS_REQUIRED,
@@ -53,7 +52,7 @@ class Create extends Action
         if (Card::objects()->filter('slug', '=', $slug)->single(true) instanceof Card) {
             return $this->response->send([
                 'code'    => Create::CODE_SLUG_DUPLICATE,
-                'message' => 'duplicate entry for `slug`'
+                'message' => 'duplicate entry for `slug`' . $slug
             ], 409);
         }
 
