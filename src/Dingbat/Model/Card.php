@@ -17,6 +17,7 @@ use Phormium\Model;
 class Card extends Model
 {
 
+    // @codingStandardsIgnoreStart
     /**
      * @var array
      */
@@ -25,6 +26,7 @@ class Card extends Model
         'table'    => 'cards',
         'pk'       => 'id'
     ];
+    // @codingStandardsIgnoreEnd
 
     /**
      * @var int

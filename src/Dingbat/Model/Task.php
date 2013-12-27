@@ -21,6 +21,7 @@ class Task extends Model
     const PRIORITY_NORMAL = 'normal';
     const PRIORITY_HIGH   = 'high';
 
+    // @codingStandardsIgnoreStart
     /**
      * @var array
      */
@@ -29,6 +30,7 @@ class Task extends Model
         'table'    => 'tasks',
         'pk'       => 'id'
     ];
+    // @codingStandardsIgnoreEnd
 
     /**
      * @var int
